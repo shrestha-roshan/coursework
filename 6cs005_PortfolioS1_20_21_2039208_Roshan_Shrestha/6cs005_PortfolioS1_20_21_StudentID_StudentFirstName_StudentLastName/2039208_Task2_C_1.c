@@ -14,7 +14,7 @@ void substr(char *dest, char *src, int start, int length)
 
 void crack(char *salt_and_encrypted)
 {
-    int s, y, o;	
+    int c, h, a;	
     char salt[7];	
     char plain[7];	
     char *enc;	
@@ -22,24 +22,25 @@ void crack(char *salt_and_encrypted)
 
     substr(salt, salt_and_encrypted, 0, 6);
 
-    for (s = 'A'; s <= 'Z'; s++)
+    for (c = 'A'; c <= 'Z'; c++)
     {
-        for (y = 'A'; y <= 'Z'; y++)
+        for (h = 'A'; h <= 'Z'; h++)
         {
-            for (o = 0; o <= 99; o++)
-            {
-                sprintf(plain, "%c%c%02d", s, y, o);
-                enc = (char*) crypt(plain, salt);
-                count++;
-                if (strcmp(salt_and_encrypted, enc) == 0)
+                for (a = 0; a <= 99; a++)
                 {
-                    printf("#%-8d%s %s\n", count, plain, enc);
+                    sprintf(plain, "%c%c%02d", c, h, a);
+                    enc = (char*) crypt(plain, salt);
+                    count++;
+                    if (strcmp(salt_and_encrypted, enc) == 0)
+                    {
+                        printf("#%-8d%s %s\n", count, plain, enc);
+                    }
+                    else
+                    {
+                        printf(" %-8d%s %s\n", count, plain, enc);
+                    }
                 }
-                else
-                {
-                    printf(" %-8d%s %s\n", count, plain, enc);
-                }
-            }
+        
         }
     }
     printf("%d solutions explored\n", count);
