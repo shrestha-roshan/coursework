@@ -92,25 +92,25 @@ int time_difference(struct timespec *start, struct timespec *finish, long long i
 
 int main(int argc, char ** argv){
 
-struct timespec start, finish;
-long long int time_elapsed;
-clock_gettime(CLOCK_MONOTONIC, &start);
-char cpuAlphabet[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-char cpuNumbers[26] = {'0','1','2','3','4','5','6','7','8','9'};
+	struct timespec start, finish;
+	long long int time_elapsed;
+	clock_gettime(CLOCK_MONOTONIC, &start);
+	char cpuAlphabet[26] = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+	char cpuNumbers[26] = {'0','1','2','3','4','5','6','7','8','9'};
 
-char * gpuAlphabet;
-cudaMalloc( (void**) &gpuAlphabet, sizeof(char) * 26); 
-cudaMemcpy(gpuAlphabet, cpuAlphabet, sizeof(char) * 26, cudaMemcpyHostToDevice);
+	char * gpuAlphabet;
+	cudaMalloc( (void**) &gpuAlphabet, sizeof(char) * 26); 
+	cudaMemcpy(gpuAlphabet, cpuAlphabet, sizeof(char) * 26, cudaMemcpyHostToDevice);
 
-char * gpuNumbers;
-cudaMalloc( (void**) &gpuNumbers, sizeof(char) * 26); 
-cudaMemcpy(gpuNumbers, cpuNumbers, sizeof(char) * 26, cudaMemcpyHostToDevice);
+	char * gpuNumbers;
+	cudaMalloc( (void**) &gpuNumbers, sizeof(char) * 26); 
+	cudaMemcpy(gpuNumbers, cpuNumbers, sizeof(char) * 26, cudaMemcpyHostToDevice);
 
-crack<<< dim3(26,26,1), dim3(10,10,1) >>>( gpuAlphabet, gpuNumbers );
-cudaThreadSynchronize();
- clock_gettime(CLOCK_MONOTONIC, &finish);
-    time_difference(&start, &finish, &time_elapsed);
-    printf("Time elapsed was %lldns or %0.9lfs\n", time_elapsed,
+	crack<<< dim3(26,26,1), dim3(10,10,1) >>>( gpuAlphabet, gpuNumbers );
+	cudaThreadSynchronize();
+	clock_gettime(CLOCK_MONOTONIC, &finish);
+    	time_difference(&start, &finish, &time_elapsed);
+    	printf("Time elapsed was %lldns or %0.9lfs\n", time_elapsed,
         (time_elapsed / 1.0e9));
     return 0;
 }
