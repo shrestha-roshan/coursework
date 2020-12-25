@@ -3,11 +3,11 @@
 
 int counter;
 static void * thread_func(void * _tn) {
-int i;
-for (i = 0; i < 100000; i++){
-	counter++;
-	return NULL;
-}
+	int i;
+	for (i = 0; i < 100000; i++){
+		counter++;
+	}
+return NULL;
 }
 int main() {
 	int i, N = 5;
@@ -16,6 +16,6 @@ int main() {
 		pthread_create(&t[i], NULL,thread_func, NULL);
 		pthread_join(t[i], NULL);
 	}
-	printf("%d\n", counter);
+	printf("%d\n", counter); 
 	return 0;
 }
