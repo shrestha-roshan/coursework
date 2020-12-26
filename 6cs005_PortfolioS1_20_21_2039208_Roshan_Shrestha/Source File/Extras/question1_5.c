@@ -4,11 +4,15 @@
 void main(){
 	int A =2;
 	int D = 4;
-	int B, C, Btemp,Ctemp;
+	int C = 5;
 	
-	Btemp=A+C;
-	B=Ctemp+D;
-	C=Btemp+D;
+	int B=A+C;
+	int Btemp = B;
+	
+	Btemp=C+D;
+	
+	int Ctemp = C;
+	C=Btemp + D;
 	
 	printf("B => %d \n", B );
 	printf("C => %d\n", C);
